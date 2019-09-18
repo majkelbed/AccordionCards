@@ -6,7 +6,7 @@ import {
   useTransition,
   useChain,
 } from "react-spring"
-import { StyledInfo, StyledSection, Grid } from "./section-ui"
+import { StyledInfo, StyledSection, Grid, TitleBar } from "./section-ui"
 import {
   delay,
   basicConfig,
@@ -44,7 +44,7 @@ const Section = ({ film, currentOpenState, index, mobile }) => {
 
   const spring = useSpring({
     ref: springRef,
-    config: config.slow,
+    config: { ...config.slow, velocity: 0 },
     from: basicConfig,
     to: open ? onClickConfig : hover ? onHoverConfig : basicConfig,
   })
@@ -53,7 +53,7 @@ const Section = ({ film, currentOpenState, index, mobile }) => {
     leave: closedConfig,
     from: closedConfig,
     ref: transitionRef,
-    config: config.gentle,
+    config: config.stiff,
   })
   useChain(open ? [springRef, transitionRef] : [transitionRef, springRef], [
     0,
@@ -75,7 +75,7 @@ const Section = ({ film, currentOpenState, index, mobile }) => {
       setOpen(!open)
     } else {
       setCurrentOpen(index)
-      setTimeout(() => setOpen(!open), 2 * delay)
+      setTimeout(() => setOpen(!open), 1.5 * delay)
     }
   }
 
@@ -123,21 +123,24 @@ const Section = ({ film, currentOpenState, index, mobile }) => {
         {transition.map(
           ({ item, key, props }) =>
             item && (
-              <Info key={key} style={props}>
-                <h1>{title}</h1>
-                {renderStars(stars)}
-                <p>{description}</p>
-                <Grid>
-                  <span>Director:</span>
-                  <span>{director}</span>
-                  <span>In Theaters:</span>
-                  <span>{date}</span>
-                  <span>Boxoffice:</span>
-                  <span>{boxoffice}</span>
-                </Grid>
-              </Info>
+              <>
+                <Info key={key} style={props}>
+                  <h1>{title}</h1>
+                  {renderStars(stars)}
+                  <p>{description}</p>
+                  <Grid>
+                    <span>Director:</span>
+                    <span>{director}</span>
+                    <span>In Theaters:</span>
+                    <span>{date}</span>
+                    <span>Boxoffice:</span>
+                    <span>{boxoffice}</span>
+                  </Grid>
+                </Info>
+              </>
             )
         )}
+        <TitleBar>{title}</TitleBar>
       </AnimatedSection>
     )
   }

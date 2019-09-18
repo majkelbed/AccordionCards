@@ -10,9 +10,28 @@ export const StyledSection = styled.div`
     background-position: center;
   }
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-end;
+  align-items: center;
+`
+export const TitleBar = styled.div`
+  position: relative;
+  color: #b6ff0e;
+  writing-mode: vertical-lr;
+  font-weight: 900;
+  align-self: flex-end;
+  transform: rotate(180deg);
+  margin: 0.5em 0;
+  :after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 102%;
+    left: 50%;
+    width: 1px;
+    height: 100vh;
+    background: white;
+    opacity: 0.3;
+  }
 `
 export const StyledInfo = styled.div`
   max-width: 100%;
